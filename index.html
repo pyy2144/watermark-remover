@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="免费在线图片去水印工具，上传图片、涂鸦标记、AI自动填充，保护你的隐私。">
+  <meta name="theme-color" content="#f9a8d4">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <title>去水印 - 免费在线图片去水印工具</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1>去水印</h1>
+      <p class="subtitle">上传图片 · 涂鸦标记 · 一键去除</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Upload Area -->
+      <section class="upload-section" id="uploadSection">
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--pink-400)" stroke-width="1.5">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <p class="upload-text">点击上传或拖拽图片到此处</p>
+          <p class="upload-hint">支持 JPG / PNG / WebP</p>
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+        </div>
+      </section>
+
+      <!-- Editor Area (hidden until image uploaded) -->
+      <section class="editor-section" id="editorSection" style="display: none;">
+        <!-- Canvas Area -->
+        <div class="canvas-area">
+          <div class="canvas-wrapper">
+            <div class="canvas-label">原图（涂鸦标记水印位置）</div>
+            <div class="canvas-container" id="originalContainer">
+              <canvas id="originalCanvas"></canvas>
+            </div>
+          </div>
+          <div class="canvas-wrapper">
+            <div class="canvas-label">处理结果</div>
+            <div class="canvas-container" id="resultContainer">
+              <canvas id="resultCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <!-- Brush Size -->
+          <div class="tool-group">
+            <label class="tool-label" for="brushSize">笔刷大小</label>
+            <input type="range" id="brushSize" min="4" max="80" value="20" class="slider">
+            <span class="brush-size-value" id="brushSizeValue">20</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="tool-group tool-actions">
+            <button class="btn btn-outline" id="undoBtn" disabled>撤销</button>
+            <button class="btn btn-outline" id="eraserBtn">橡皮擦</button>
+            <button class="btn btn-outline" id="clearBtn">清除标记</button>
+            <button class="btn btn-outline" id="compareBtn" disabled>前后对比</button>
+          </div>
+
+          <!-- Process & Download -->
+          <div class="tool-group tool-actions">
+            <button class="btn btn-primary" id="processBtn" disabled>去水印</button>
+            <button class="btn btn-primary" id="downloadBtn" disabled>下载图片</button>
+          </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+          <div class="loading-spinner"></div>
+          <p class="loading-text" id="loadingText">加载中...</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>完全在浏览器内处理，图片不会上传到任何服务器</p>
+    </footer>
+  </div>
+
+  <script async src="https://docs.opencv.org/4.8.0/opencv.js"
+          onload="onOpenCvReady()"
+          onerror="onOpenCvError()"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/drawing.js"></script>
+  <script src="js/inpaint.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
